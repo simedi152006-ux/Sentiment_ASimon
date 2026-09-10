@@ -61,7 +61,7 @@ with st.expander('Analizar texto'):
             
         else:
             st.write('Es un sentimiento Neutral 😐')
-            with open('HappySUN.json') as source:
+            with open('Neutral.json') as source:
                 animation=json.load(source)
             st.lottie(animation, width=350)
 
