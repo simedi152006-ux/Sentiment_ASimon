@@ -41,17 +41,14 @@ with st.expander('Analizar texto'):
     if text:
         translation = translator.translate(text, src="es", dest="en")
         trans_text = translation.text
-
         blob = TextBlob(trans_text)
-
         st.write('Polarity: ', round(blob.sentiment.polarity, 2))
         st.write('Subjectivity: ', round(blob.sentiment.subjectivity, 2))
-
         x = round(blob.sentiment.polarity, 2)
 
         if x > 0.0 and x <= 1.0:
             st.write('Es un sentimiento Positivo 😊')
-            with open('HappySUN.json') as source:
+            with open('Happy.json') as source:
                 animation=json.load(source)
             st.lottie(animation, width=350)
 
