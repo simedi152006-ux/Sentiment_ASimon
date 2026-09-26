@@ -371,12 +371,12 @@ with st.sidebar:
 with st.expander("🔍 Analizar un texto", expanded=True):
 
     st.markdown(
-        "### ✍️ Escribe una frase"
+        "### ✍️ Escribe una emoción"
     )
 
     text = st.text_input(
         "",
-        placeholder="Ejemplo: Hoy estoy muy feliz porque salió el sol ☀️"
+        placeholder="Escribe tu emoción en inglés"
     )
 
 
@@ -484,23 +484,8 @@ with st.expander("🔍 Analizar un texto", expanded=True):
 
             # VIDEO
 
-            st.markdown(
-                """
-                <div class="video-card">
-
-                    <div class="video-titulo">
-                        🎬 Un pequeño momento para cambiar el ánimo
-                    </div>
-
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-
             st.video(
                 "https://youtu.be/Ch6xdV_ZjdU?si=CVmBBc11GpeAXCMp"
-            )
-
 
         # -------------------------------------------------
         # NEUTRAL
