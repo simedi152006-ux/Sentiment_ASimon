@@ -13,7 +13,6 @@ import json
 
 st.set_page_config(
     page_title="Análisis de Sentimiento",
-    page_icon="💭",
     layout="centered"
 )
 
@@ -296,7 +295,7 @@ st.markdown(
 # IMAGEN PRINCIPAL
 # ---------------------------------------------------------
 
-image = Image.open('EMOCIONES.png')
+image = Image.open('EMOCIONESPAG.png')
 
 st.markdown(
     '<div class="imagen-principal">',
