@@ -1,4 +1,3 @@
-```python
 from textblob import TextBlob
 import pandas as pd
 import streamlit as st
@@ -497,4 +496,3 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-```
