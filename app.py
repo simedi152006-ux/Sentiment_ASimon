@@ -1,3 +1,4 @@
+```python
 from textblob import TextBlob
 import pandas as pd
 import streamlit as st
@@ -156,41 +157,6 @@ st.markdown("""
         margin-top: 25px;
 
         color: #ffffff;
-    }
-
-
-    /* VIDEO */
-    .video-card {
-
-        background: linear-gradient(
-            135deg,
-            rgba(255, 70, 100, 0.14),
-            rgba(120, 70, 200, 0.14)
-        );
-
-        border: 1px solid rgba(255,255,255,0.15);
-
-        border-radius: 24px;
-
-        padding: 20px;
-
-        margin-top: 25px;
-
-        box-shadow: 0 12px 35px rgba(0,0,0,0.3);
-    }
-
-
-    .video-titulo {
-
-        text-align: center;
-
-        color: #FFF1B8;
-
-        font-size: 1.3rem;
-
-        font-weight: 700;
-
-        margin-bottom: 15px;
     }
 
 
@@ -356,12 +322,8 @@ with st.sidebar:
         o emociones.
 
         **0** objetivo · **1** subjetivo
-        """
+        """ 
     )
-
-    st.divider()
-
-    st.caption("Python · TextBlob · Streamlit")
 
 
 # ---------------------------------------------------------
@@ -420,7 +382,7 @@ with st.expander("🔍 Analizar un texto", expanded=True):
         )
 
 
-        # Métricas con Streamlit
+        # Métricas
         col1, col2 = st.columns(2)
 
         with col1:
@@ -486,6 +448,8 @@ with st.expander("🔍 Analizar un texto", expanded=True):
 
             st.video(
                 "https://youtu.be/Ch6xdV_ZjdU?si=CVmBBc11GpeAXCMp"
+            )
+
 
         # -------------------------------------------------
         # NEUTRAL
@@ -533,3 +497,4 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+```
