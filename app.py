@@ -9,7 +9,7 @@ import json
 
 st.title('Análisis de Sentimiento')
 
-image = Image.open('emoticones.jpg')
+image = Image.open('EMOCIONES.png')
 st.image(image)
 
 st.subheader(
