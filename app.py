@@ -13,18 +13,19 @@ import json
 
 st.set_page_config(
     page_title="Análisis de Sentimiento",
+    page_icon="💭",
     layout="centered"
 )
 
 
 # ---------------------------------------------------------
-# ESTILOS VISUALES
+# ESTILOS
 # ---------------------------------------------------------
 
 st.markdown("""
 <style>
 
-    /* Fondo general */
+    /* Fondo */
     .stApp {
         background:
             radial-gradient(circle at 10% 10%, rgba(255, 105, 180, 0.20), transparent 30%),
@@ -34,24 +35,30 @@ st.markdown("""
         color: white;
     }
 
-    /* Contenedor principal */
+
+    /* Contenedor */
     .main .block-container {
         max-width: 850px;
         padding-top: 3rem;
         padding-bottom: 4rem;
     }
 
-    /* Título */
+
+    /* TÍTULO PRINCIPAL */
     .titulo {
         text-align: center;
         font-size: 3.2rem;
         font-weight: 800;
         margin-bottom: 0.2rem;
-        background: linear-gradient(90deg, #ff7eb3, #c77dff, #70d6ff);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+
+        color: #FFF1B8;
+
+        text-shadow:
+            0 0 10px rgba(255, 241, 184, 0.25);
     }
 
+
+    /* Subtítulo */
     .subtitulo {
         text-align: center;
         color: #d8cfe5;
@@ -59,12 +66,14 @@ st.markdown("""
         margin-bottom: 2rem;
     }
 
-    /* Imagen principal */
+
+    /* Imagen */
     .imagen-principal {
         display: flex;
         justify-content: center;
         margin: 1rem 0 2rem 0;
     }
+
 
     /* Tarjetas */
     .card {
@@ -73,132 +82,194 @@ st.markdown("""
         border-radius: 24px;
         padding: 25px;
         margin: 20px 0;
+
         box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+
         backdrop-filter: blur(12px);
     }
 
-    /* Tarjeta del resultado */
+
+    /* Resultado */
     .resultado {
         background: linear-gradient(
             135deg,
             rgba(199,125,255,0.18),
             rgba(112,214,255,0.12)
         );
+
         border: 1px solid rgba(255,255,255,0.18);
+
         border-radius: 24px;
+
         padding: 25px;
+
         margin-top: 25px;
-        text-align: center;
+
         box-shadow: 0 12px 35px rgba(0,0,0,0.3);
     }
 
-    /* Métricas */
-    .metricas {
-        display: flex;
-        justify-content: center;
-        gap: 25px;
-        margin-top: 20px;
-    }
 
-    .metrica {
-        background: rgba(255,255,255,0.08);
-        border-radius: 18px;
-        padding: 18px 30px;
-        min-width: 180px;
+    /* Título de resultados */
+    .titulo-resultado {
         text-align: center;
-    }
-
-    .metrica-titulo {
-        color: #cfc3da;
-        font-size: 0.9rem;
-    }
-
-    .metrica-valor {
-        color: #ffffff;
-        font-size: 1.8rem;
+        color: #FFF1B8;
+        font-size: 1.4rem;
         font-weight: 700;
+        margin-bottom: 20px;
     }
+
+
+    /* Métricas */
+    div[data-testid="stMetric"] {
+
+        background: rgba(255,255,255,0.08);
+
+        border: 1px solid rgba(255,255,255,0.12);
+
+        border-radius: 18px;
+
+        padding: 15px;
+
+        text-align: center;
+
+        box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    }
+
+
+    div[data-testid="stMetricLabel"] {
+        color: #cfc3da !important;
+    }
+
+
+    div[data-testid="stMetricValue"] {
+        color: #FFF1B8 !important;
+    }
+
 
     /* Resultado emocional */
     .emocion {
+        text-align: center;
+
         font-size: 1.8rem;
+
         font-weight: 700;
-        margin-top: 10px;
+
+        margin-top: 25px;
+
+        color: #ffffff;
     }
 
-    /* Video */
+
+    /* VIDEO */
     .video-card {
+
         background: linear-gradient(
             135deg,
             rgba(255, 70, 100, 0.14),
             rgba(120, 70, 200, 0.14)
         );
+
         border: 1px solid rgba(255,255,255,0.15);
+
         border-radius: 24px;
+
         padding: 20px;
+
         margin-top: 25px;
+
         box-shadow: 0 12px 35px rgba(0,0,0,0.3);
     }
 
+
     .video-titulo {
+
         text-align: center;
-        color: #ffffff;
+
+        color: #FFF1B8;
+
         font-size: 1.3rem;
+
         font-weight: 700;
+
         margin-bottom: 15px;
     }
 
+
     /* Sidebar */
     section[data-testid="stSidebar"] {
+
         background: linear-gradient(
             180deg,
             #171025,
             #211438,
             #151020
         );
+
         border-right: 1px solid rgba(255,255,255,0.1);
     }
 
+
     section[data-testid="stSidebar"] h2,
     section[data-testid="stSidebar"] h3 {
-        color: #e4b5ff;
+
+        color: #FFF1B8;
     }
+
 
     section[data-testid="stSidebar"] p {
+
         color: #d8cfe5;
-        line-height: 1.6;
+
+        line-height: 1.5;
     }
 
-    /* Input */
+
+    /* Campo de texto */
     div[data-baseweb="input"] {
+
         background-color: rgba(255,255,255,0.08);
+
         border-radius: 14px;
+
         border: 1px solid rgba(255,255,255,0.18);
     }
 
+
     div[data-baseweb="input"] input {
+
         color: white !important;
     }
 
+
     div[data-baseweb="input"] input::placeholder {
+
         color: #bcb2c8 !important;
     }
 
+
     /* Expander */
     div[data-testid="stExpander"] {
+
         background: rgba(255,255,255,0.06);
+
         border: 1px solid rgba(255,255,255,0.15);
+
         border-radius: 20px;
+
         overflow: hidden;
     }
 
+
     /* Texto */
     p, label {
+
         color: #eee8f4;
     }
 
-    /* Separador */
+
+    /* Separadores */
     hr {
+
         border-color: rgba(255,255,255,0.12);
     }
 
@@ -227,9 +298,20 @@ st.markdown(
 
 image = Image.open('EMOCIONES.png')
 
-st.markdown('<div class="imagen-principal">', unsafe_allow_html=True)
-st.image(image, width=650)
-st.markdown('</div>', unsafe_allow_html=True)
+st.markdown(
+    '<div class="imagen-principal">',
+    unsafe_allow_html=True
+)
+
+st.image(
+    image,
+    width=650
+)
+
+st.markdown(
+    '</div>',
+    unsafe_allow_html=True
+)
 
 
 # ---------------------------------------------------------
@@ -239,12 +321,13 @@ st.markdown('</div>', unsafe_allow_html=True)
 st.markdown("""
 <div class="card">
 
-<h3 style="text-align:center;">✨ ¿Cómo funciona?</h3>
+<h3 style="text-align:center; color:#FFF1B8;">
+✨ ¿Cómo funciona?
+</h3>
 
 <p style="text-align:center;">
-Escribe una frase y nuestro sistema analizará el sentimiento presente
-en ella. El resultado tendrá en cuenta la <b>polaridad</b> y la
-<b>subjetividad</b> del texto.
+Escribe una frase y descubre si expresa un sentimiento
+<b>positivo, negativo o neutral</b>.
 </p>
 
 </div>
@@ -261,41 +344,25 @@ with st.sidebar:
 
     st.write(
         """
-        **Polaridad**
-
-        Indica si el sentimiento expresado en el texto es positivo,
+        **Polaridad:** indica si el sentimiento es positivo,
         negativo o neutral.
 
-        Su valor oscila entre **-1 y 1**:
-
-        🔴 -1 → Muy negativo
-
-        ⚪ 0 → Neutral
-
-        🟢 1 → Muy positivo
+        **-1** negativo · **0** neutral · **1** positivo
         """
     )
-
-    st.divider()
 
     st.write(
         """
-        **Subjetividad**
+        **Subjetividad:** indica cuánto expresa opiniones
+        o emociones.
 
-        Mide cuánto del contenido corresponde a opiniones,
-        emociones o creencias frente a información objetiva.
-
-        Su valor va de **0 a 1**:
-
-        📘 0 → Objetivo
-
-        💭 1 → Subjetivo
+        **0** objetivo · **1** subjetivo
         """
     )
 
     st.divider()
 
-    st.caption("Proyecto realizado con Python + Streamlit")
+    st.caption("Python · TextBlob · Streamlit")
 
 
 # ---------------------------------------------------------
@@ -313,6 +380,7 @@ with st.expander("🔍 Analizar un texto", expanded=True):
         placeholder="Ejemplo: Hoy estoy muy feliz porque salió el sol ☀️"
     )
 
+
     if text:
 
         translator = Translator()
@@ -327,11 +395,19 @@ with st.expander("🔍 Analizar un texto", expanded=True):
 
         blob = TextBlob(trans_text)
 
-        polarity = round(blob.sentiment.polarity, 2)
-        subjectivity = round(blob.sentiment.subjectivity, 2)
+        polarity = round(
+            blob.sentiment.polarity,
+            2
+        )
+
+        subjectivity = round(
+            blob.sentiment.subjectivity,
+            2
+        )
+
 
         # -------------------------------------------------
-        # MÉTRICAS
+        # RESULTADOS
         # -------------------------------------------------
 
         st.markdown(
@@ -339,42 +415,35 @@ with st.expander("🔍 Analizar un texto", expanded=True):
             unsafe_allow_html=True
         )
 
-        st.markdown("### 📊 Resultado del análisis")
-
         st.markdown(
-            f"""
-            <div class="metricas">
-
-                <div class="metrica">
-                    <div class="metrica-titulo">
-                        Polaridad
-                    </div>
-
-                    <div class="metrica-valor">
-                        {polarity}
-                    </div>
-                </div>
-
-                <div class="metrica">
-                    <div class="metrica-titulo">
-                        Subjetividad
-                    </div>
-
-                    <div class="metrica-valor">
-                        {subjectivity}
-                    </div>
-                </div>
-
-            </div>
-            """,
+            '<div class="titulo-resultado">📊 Resultado del análisis</div>',
             unsafe_allow_html=True
         )
 
+
+        # Métricas con Streamlit
+        col1, col2 = st.columns(2)
+
+        with col1:
+
+            st.metric(
+                label="🎯 Polaridad",
+                value=polarity
+            )
+
+        with col2:
+
+            st.metric(
+                label="💭 Subjetividad",
+                value=subjectivity
+            )
+
+
         # -------------------------------------------------
-        # SENTIMIENTO POSITIVO
+        # POSITIVO
         # -------------------------------------------------
 
-        if polarity > 0.0 and polarity <= 1.0:
+        if polarity > 0:
 
             st.markdown(
                 '<div class="emocion">💖 Es un sentimiento Positivo</div>',
@@ -382,6 +451,7 @@ with st.expander("🔍 Analizar un texto", expanded=True):
             )
 
             with open('Happy.json') as source:
+
                 animation = json.load(source)
 
             st_lottie(
@@ -392,10 +462,10 @@ with st.expander("🔍 Analizar un texto", expanded=True):
 
 
         # -------------------------------------------------
-        # SENTIMIENTO NEGATIVO
+        # NEGATIVO
         # -------------------------------------------------
 
-        elif polarity >= -1 and polarity <= 0:
+        elif polarity < 0:
 
             st.markdown(
                 '<div class="emocion">💙 Es un sentimiento Negativo</div>',
@@ -403,6 +473,7 @@ with st.expander("🔍 Analizar un texto", expanded=True):
             )
 
             with open('Sad.json') as source:
+
                 animation = json.load(source)
 
             st_lottie(
@@ -411,19 +482,21 @@ with st.expander("🔍 Analizar un texto", expanded=True):
                 key="sad_animation"
             )
 
-            # -------------------------------------------------
+
             # VIDEO
-            # -------------------------------------------------
 
-            st.markdown("""
-            <div class="video-card">
+            st.markdown(
+                """
+                <div class="video-card">
 
-                <div class="video-titulo">
-                    🎬 Un pequeño momento para cambiar el ánimo
+                    <div class="video-titulo">
+                        🎬 Un pequeño momento para cambiar el ánimo
+                    </div>
+
                 </div>
-
-            </div>
-            """, unsafe_allow_html=True)
+                """,
+                unsafe_allow_html=True
+            )
 
             st.video(
                 "https://youtu.be/Ch6xdV_ZjdU?si=CVmBBc11GpeAXCMp"
@@ -431,7 +504,7 @@ with st.expander("🔍 Analizar un texto", expanded=True):
 
 
         # -------------------------------------------------
-        # SENTIMIENTO NEUTRAL
+        # NEUTRAL
         # -------------------------------------------------
 
         else:
@@ -442,6 +515,7 @@ with st.expander("🔍 Analizar un texto", expanded=True):
             )
 
             with open('Neutral.json') as source:
+
                 animation = json.load(source)
 
             st_lottie(
@@ -449,6 +523,7 @@ with st.expander("🔍 Analizar un texto", expanded=True):
                 width=350,
                 key="neutral_animation"
             )
+
 
         st.markdown(
             '</div>',
@@ -464,11 +539,13 @@ st.markdown("---")
 
 st.markdown(
     """
-    <p style="text-align:center; color:#aaa;">
+    <p style="
+        text-align:center;
+        color:#aaa;
+        margin-top:20px;
+    ">
         💜 Explora tus emociones a través de las palabras
     </p>
     """,
     unsafe_allow_html=True
 )
-
-
